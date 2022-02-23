@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'gradle build'
-        sh 'gradle javadoc'
+        withGradle()
       }
     }
 
