@@ -26,7 +26,7 @@ pipeline {
         stage('Code Analysis') {
           steps {
             sh '${gradle} sonarqube'
-            waitForQualityGate(credentialsId: 'sonar', abortPipeline: true)
+            waitForQualityGate true
           }
         }
 
