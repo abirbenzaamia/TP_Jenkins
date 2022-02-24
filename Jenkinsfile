@@ -31,7 +31,7 @@ pipeline {
 
         stage('Test Reporting') {
           steps {
-            cucumber 'build/jacoco/.exec'
+            cucumber 'reports/example-report.json'
           }
         }
 
