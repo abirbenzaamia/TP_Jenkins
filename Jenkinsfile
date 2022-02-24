@@ -2,6 +2,10 @@ pipeline {
   agent any
   stages {
     stage('Build') {
+      agent any
+      environment {
+        gradle = '/usr/local/bin/gradle'
+      }
       steps {
         sh 'gradle build'
       }
