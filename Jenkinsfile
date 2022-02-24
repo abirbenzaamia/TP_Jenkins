@@ -17,7 +17,24 @@ pipeline {
 
     stage('Mail Notification') {
       steps {
-        mail(subject: 'Build succeed ', body: 'Hello , The build finished with sucess', to: 'ia_benzaamia@esi.dz')
+        mail(subject: 'Build succeed ', body: 'Hello , The build finished with sucess', to: 'ia_benzaamia@esi.dz', replyTo: 'ia_benzaamia@esi.dz')
+      }
+    }
+
+    stage('Code Analysis') {
+      parallel {
+        stage('Code Analysis') {
+          steps {
+            sh '${gradle} sonarqube'
+          }
+        }
+
+        stage('Test Reporting') {
+          steps {
+            cucumber 'build/jacoco/.exec'
+          }
+        }
+
       }
     }
 
