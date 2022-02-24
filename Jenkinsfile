@@ -8,6 +8,7 @@ pipeline {
       }
       steps {
         sh '${gradle} build'
+        sh '${gradle} javadoc'
       }
     }
 
