@@ -7,7 +7,7 @@ pipeline {
         gradle = '/usr/local/bin/gradle'
       }
       steps {
-        sh '${GRADLE_HOME] build'
+        sh '${gradle} build'
       }
     }
 
