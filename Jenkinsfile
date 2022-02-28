@@ -12,6 +12,10 @@ pipeline {
         archiveArtifacts 'build/libs/**/*.jar'
         archiveArtifacts 'build/docs/javadoc/**'
         junit 'build/test-results/test/*.xml'
+        catchError(buildResult: 'failure', stageResult: 'post') {
+          mail(subject: 'Build status', body: 'The build failed!', to: 'ia_benzaamia@esi.dz')
+        }
+
       }
     }
 
