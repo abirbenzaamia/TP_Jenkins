@@ -4,14 +4,14 @@ pipeline {
     stage('Build') {
       agent any
       steps {
-        withGradle() {
-          sh 'gradle build'
-          sh 'gradle javadoc'
-        }
+        sh '''./gradlew build
 
+'''
         archiveArtifacts 'build/libs/**/*.jar'
         archiveArtifacts 'build/docs/javadoc/**'
         junit 'build/test-results/test/*.xml'
+        sh '''./gradlew javadoc
+'''
       }
     }
 
