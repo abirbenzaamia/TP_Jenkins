@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       agent any
       steps {
-        sh './gradlew build --stacktrace'
+        sh '${gradle} build'
         sh '${gradle} javadoc'
         archiveArtifacts 'build/libs/**/*.jar'
         archiveArtifacts 'build/docs/javadoc/**'
@@ -14,7 +14,7 @@ pipeline {
 
     stage('Mail Notification') {
       steps {
-        mail(subject: 'Build succeed ', body: 'Hello , The build finished with sucess', to: 'ia_benzaamia@esi.dz', replyTo: 'ia_benzaamia@esi.dz')
+        mail(subject: 'Build status', body: 'The build was successful', to: 'ia_benzaamia@esi.dz', replyTo: 'ia_benzaamia@esi.dz')
       }
     }
 
@@ -32,10 +32,16 @@ pipeline {
 
         stage('Test Reporting') {
           steps {
-            cucumber(fileIncludePattern: 'build/reports/cucumber', jsonReportDirectory: 'reports/', reportTitle: 'example-report.json')
+            cucumber(fileIncludePattern: '*/.json', jsonReportDirectory: 'reports/')
           }
         }
 
+      }
+    }
+
+    stage('Deployment') {
+      steps {
+        sh '${gradle} publish'
       }
     }
 
