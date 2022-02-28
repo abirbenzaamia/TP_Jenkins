@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       agent any
       steps {
-        sh '''./gradlew build
+        sh '''./gradlew build --stacktrace 
 
 '''
         archiveArtifacts 'build/libs/**/*.jar'
