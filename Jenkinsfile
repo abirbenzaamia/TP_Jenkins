@@ -3,19 +3,12 @@ pipeline {
   stages {
     stage('Build') {
       agent any
-      environment {
-        gradle = '/usr/local/bin/gradle'
-      }
       steps {
         sh './gradlew build'
         sh './gradlew javadoc'
         archiveArtifacts 'build/libs/**/*.jar'
         archiveArtifacts 'build/docs/javadoc/**'
         junit 'build/test-results/test/*.xml'
-        catchError(buildResult: 'failure', stageResult: 'post') {
-          mail(subject: 'Build status', body: 'The build failed!', to: 'ia_benzaamia@esi.dz')
-        }
-
       }
     }
 
@@ -29,7 +22,10 @@ pipeline {
       parallel {
         stage('Code Analysis') {
           steps {
-            sh '${gradle} sonarqube'
+            withSonarQubeEnv(installationName: 'sonar', envOnly: true) {
+              sh './gradlew sonarqube'
+            }
+
             waitForQualityGate true
           }
         }
