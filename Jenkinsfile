@@ -49,5 +49,11 @@ pipeline {
       }
     }
 
+    stage('Slack Notification') {
+      steps {
+        slackSend(baseUrl: 'https://hooks.slack.com/services/', message: 'Build and Deploy Success', channel: '#tp-jenkins', token: 'T034CCB4612/B034A4QELCA/ztCKZvweVCOKJYE4bglR3g1Z')
+      }
+    }
+
   }
 }
