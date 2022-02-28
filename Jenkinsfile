@@ -22,7 +22,7 @@ pipeline {
       parallel {
         stage('Code Analysis') {
           steps {
-            withSonarQubeEnv(installationName: 'sonar', envOnly: true) {
+            withSonarQubeEnv('sonar') {
               sh './gradlew sonarqube'
             }
 
