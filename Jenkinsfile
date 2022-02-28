@@ -5,7 +5,7 @@ pipeline {
       agent any
       steps {
         sh './gradlew build --stacktrace'
-        sh './gradlew javadoc'
+        sh '${gradle} javadoc'
         archiveArtifacts 'build/libs/**/*.jar'
         archiveArtifacts 'build/docs/javadoc/**'
         junit 'build/test-results/test/*.xml'
