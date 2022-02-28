@@ -7,8 +7,8 @@ pipeline {
         gradle = '/usr/local/bin/gradle'
       }
       steps {
-        sh '${gradle} build'
-        sh '${gradle} javadoc'
+        sh './gradlew build'
+        sh './gradlew javadoc'
         archiveArtifacts 'build/libs/**/*.jar'
         archiveArtifacts 'build/docs/javadoc/**'
         junit 'build/test-results/test/*.xml'
